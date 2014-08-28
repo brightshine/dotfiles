@@ -63,14 +63,14 @@ set incsearch						" BUT do highlight as you type you search phrase
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text Formatting/Layout
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tabstop=4						" tab spacing (settings below are just to unify it)
-set softtabstop=4					" unify
-set shiftwidth=4					" unify 
+"set tabstop=4						" tab spacing (settings below are just to unify it)
+"set softtabstop=4					" unify
+"set shiftwidth=4					" unify 
 "set cindent							" do c-style indenting
 "set autoindent						" always set autoindenting on
 "set smartindent						"always set smartindenting on
 "set noexpandtab						" real tabs please!
-set formatoptions=mtcql				" ¤è«K¤¤¤å­«±Æ³]©w
+set formatoptions=mtcql				" æ–¹ä¾¿ä¸­æ–‡é‡æ’è¨­å®š
 "set smarttab						" use tabs at the start of a line, spaces elsewhere
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -120,15 +120,15 @@ map <F4> :q!<CR>
 "map <F5> :bp<CR> "previous buffer
 nnoremap <silent> <F5> :NERDTree<CR>
 "map <F6> :bn<CR> "next buffer
-"" ³æÁä <F7> ±±¨î syntax on/off¡C­Ë±×½u¬O Vim script ªº§é¦æ¼Ğ»x
-" «ö¤@¦¸ <F7> ¬O on ªº¸Ü¡A¦A«ö¤@¦¸«h¬O off¡A¦A«ö¤@¦¸¤S¬O on¡C
-" " ­ì¦]¬O¦³®É­ÔÃC¦â¤Ó¦h·|§«Ãª¾\Åª¡C
+"" å–®éµ <F7> æ§åˆ¶ syntax on/offã€‚å€’æ–œç·šæ˜¯ Vim script çš„æŠ˜è¡Œæ¨™èªŒ
+" æŒ‰ä¸€æ¬¡ <F7> æ˜¯ on çš„è©±ï¼Œå†æŒ‰ä¸€æ¬¡å‰‡æ˜¯ offï¼Œå†æŒ‰ä¸€æ¬¡åˆæ˜¯ onã€‚
+" " åŸå› æ˜¯æœ‰æ™‚å€™é¡è‰²å¤ªå¤šæœƒå¦¨ç¤™é–±è®€ã€‚
 map <F7> :if exists("syntax_on") <BAR>
 			\   syntax off <BAR><CR>
 			\ else <BAR>
 			\   syntax enable <BAR>
 			\ endif <CR>
-" «ö F8 ·|¦b searching highlight ¤Î«D highlight ¶¡¤Á´«
+" æŒ‰ F8 æœƒåœ¨ searching highlight åŠé highlight é–“åˆ‡æ›
 map <F8> :set hls!<BAR>set hls?<CR>
 " " Toggle on/off paste mode
 map <F9> :set paste!<BAr>set paste?<CR>
@@ -137,7 +137,7 @@ set pastetoggle=<F9>
 map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
 "map <F11> :set fileencoding=utf-8<CR>echo "FILE Encoding -> UTF-8"
-map <F12> :%!xxd -r<CR>    " ¦^´_¥¿±`Åã¥Ü
+map <F12> :%!xxd -r<CR>    " å›å¾©æ­£å¸¸é¡¯ç¤º
 
 "quickly resize windows with a vertical split
 :map - <C-W>-
@@ -150,7 +150,7 @@ map <F12> :%!xxd -r<CR>    " ¦^´_¥¿±`Åã¥Ü
 " Special
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nomodeline "avoid the possibility of trojaned text files.
-set nocompatible "(Â²¼g set nocp) ³]©w½Æ»s¤å¦r¦s¤Jbuffer, ©óÂ÷¶}¦A¶}±Ò®É¥iª½±µ¶K¤W(yy,p)
+set nocompatible "(ç°¡å¯« set nocp) è¨­å®šè¤‡è£½æ–‡å­—å­˜å…¥buffer, æ–¼é›¢é–‹å†é–‹å•Ÿæ™‚å¯ç›´æ¥è²¼ä¸Š(yy,p)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Programming language
@@ -190,7 +190,7 @@ endf
 
 let perl_extended_vars=1 " highlight advanced perl vars inside strings
 
-" ¸Ñ¨M¤@¨Ç¼e¦r¤¸³Q¸ÑÄÀ¦¨³æ¦r¤¸ªº°İÃD
+" è§£æ±ºä¸€äº›å¯¬å­—å…ƒè¢«è§£é‡‹æˆå–®å­—å…ƒçš„å•é¡Œ
 if exists("&ambiwidth")
 	set ambiwidth=double
 endif
