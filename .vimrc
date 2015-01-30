@@ -19,6 +19,7 @@ syntax on				" syntax highlighting on
 "color oceandeep			" my theme
 if ! has("gui_running")
 	set t_Co=256
+	set guifont=Consolas:h12:cANSI
 endif 
 "colorscheme peaksea			" my theme
 colorscheme grb256
