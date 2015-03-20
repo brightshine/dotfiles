@@ -7,7 +7,7 @@ set history=50		" keep 50 lines of command line history
 set cf " enable error files and error jumping
 set clipboard+=unnamed " turns out I do like is sharing windows clipboard
 set ffs=unix,dos,mac " support all three, in this order
-call pathogen#runtime_append_all_bundles()
+"call pathogen#runtime_append_all_bundles()
 filetype plugin indent on " detect the type of file and load indent files
 "set isk+=_,$,@,%,#,- " none of these should be word dividers, so make them not be
 
@@ -19,7 +19,6 @@ syntax on				" syntax highlighting on
 "color oceandeep			" my theme
 if ! has("gui_running")
 	set t_Co=256
-	set guifont=Consolas:h12:cANSI
 endif 
 "colorscheme peaksea			" my theme
 colorscheme grb256
@@ -30,8 +29,8 @@ augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Files/Backups
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set backup			  				 " make backup file
-set backupdir=~/backup/vim/ " where to put backup file
+"set backup			  				 " make backup file
+"set backupdir=~/backup/vim/ " where to put backup file
 "set directory=$VIM\vimfiles\temp	 " directory is the directory for temp file
 "set makeef=error.err				 " When using make, where should it dump the file
 
@@ -114,7 +113,7 @@ if &term =~ '^screen'
 	set t_k4=^[[14~
 endif
 
-map <F1> :make<CR>
+map <F1> :make -C %:h <CR>
 map <F2> :up<CR>
 map <F3> :up<CR>:q<CR>
 map <F4> :q!<CR>
@@ -197,4 +196,17 @@ if exists("&ambiwidth")
 endif
 
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+"" set the runtime path to include Vundle and initialize
+set runtimepath+=~/.vim/bundle/vundle/
+call vundle#rc()
+" alternatively, pass a path where Vundle should install plugins
+"let path = '~/some/path/here'
+"call vundle#rc(path)
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/vundle'
+
+" Better file browser
+Bundle 'scrooloose/nerdtree'
+
+set path=./,/home/daniel/src/SUM/scebioscfg_lib/src/,/home/daniel/src/SUM/scebioscfg/src/
