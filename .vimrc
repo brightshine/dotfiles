@@ -210,3 +210,4 @@ Plugin 'gmarik/vundle'
 Bundle 'scrooloose/nerdtree'
 
 set path=./,/home/daniel/src/SUM/scebioscfg_lib/src/,/home/daniel/src/SUM/scebioscfg/src/
+Plugin 'rking/ag.vim'
