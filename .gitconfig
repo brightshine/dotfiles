@@ -1,0 +1,31 @@
+[color]
+	ui = true
+	diff = auto
+	status = auto
+	branch = auto
+	log = false
+[user]
+	name = daniel
+	email = daniel.hsieh@supermicro.com.tw
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+	pager = view -
+[alias]
+	br = branch
+	co = checkout
+	ci = commit
+	st = status
+	re = remote
+
+	cbr = rev-parse --abbrev-ref HEAD
+	lo = log --oneline
+	dt = difftool
+	mt = mergetool
+	showt = "!f() { git dt $1^ $1; }; f"
+	files = "!f() { git diff --name-status $1^ $1; }; f"
+[merge]
+	tool = vim
+
+[push]
+	default = simple
