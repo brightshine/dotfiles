@@ -6,7 +6,7 @@
 	log = false
 [user]
 	name = daniel
-	email = daniel.hsieh@supermicro.com.tw
+	email = danielhsieh@supermicro.com.tw
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore
