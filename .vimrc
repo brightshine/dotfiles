@@ -1,8 +1,43 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Vundle
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+"" set the runtime path to include Vundle and initialize
+set runtimepath+=~/.vim/bundle/Vundle.vim
+
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
+if !filereadable(vundle_readme)
+	echo "Installing Vundle.."
+	echo ""
+	silent !mkdir -p ~/.vim/bundle
+	silent !git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+	let iCanHazVundle=0
+endif
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"let path = '~/some/path/here'
+"call vundle#rc(path)
+
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/vundle'
+
+" Better file browser
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'scrooloose/syntastic.git'
+
+Plugin 'Valloric/YouCompleteMe'
+
+Plugin 'rking/ag.vim'
+call vundle#end()  
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible " get out of horrible vi-compatible mode
 set history=50		" keep 50 lines of command line history
 set cf " enable error files and error jumping
 set clipboard+=unnamed " turns out I do like is sharing windows clipboard
@@ -119,7 +154,7 @@ map <F3> :up<CR>:q<CR>
 map <F4> :q!<CR>
 "map <F5> :bp<CR> "previous buffer
 nnoremap <silent> <F5> :NERDTree<CR>
-"map <F6> :bn<CR> "next buffer
+map <F6> :SyntasticToggleMode<CR>
 "" 單鍵 <F7> 控制 syntax on/off。倒斜線是 Vim script 的折行標誌
 " 按一次 <F7> 是 on 的話，再按一次則是 off，再按一次又是 on。
 " " 原因是有時候顏色太多會妨礙閱讀。
@@ -196,18 +231,31 @@ if exists("&ambiwidth")
 endif
 
 
-"" set the runtime path to include Vundle and initialize
-set runtimepath+=~/.vim/bundle/vundle/
-call vundle#rc()
-" alternatively, pass a path where Vundle should install plugins
-"let path = '~/some/path/here'
-"call vundle#rc(path)
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
-
-" Better file browser
-Bundle 'scrooloose/nerdtree'
-
 set path=./,/home/daniel/src/SUM/scebioscfg_lib/src/,/home/daniel/src/SUM/scebioscfg/src/
-Plugin 'rking/ag.vim'
+set csprg=gtags-cscope
+cs add GTAGS
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" syntastic
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+execute pathogen#infect()
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"let g:syntastic_cpp_check_header = 1
+"let g:syntastic_cpp_include_dirs = [ '' ]
+"let g:syntastic_cpp_auto_refresh_includes = 1
+"let g:syntastic_disabled_filetypes=['cpp']
+
+" --- YouCompleteMe
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_key_list_select_completion = ['<TAB>']
+let g:ycm_key_list_previous_completion=['<S-TAB>']
+"let g:ycm_collect_identifiers_from_tags_files = 1
+
