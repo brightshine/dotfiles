@@ -32,12 +32,19 @@ Plugin 'scrooloose/syntastic.git'
 
 Plugin 'Valloric/YouCompleteMe'
 
+" Improved C++11/14 STL syntax highlighting 
+Plugin 'Mizuchi/STL-Syntax'
+
+" Swtich between source files and header files quickly."
+Plugin 'vim-scripts/a.vim'
+
 Plugin 'rking/ag.vim'
 call vundle#end()  
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let mapleader=";"
 set history=50		" keep 50 lines of command line history
 set cf " enable error files and error jumping
 set clipboard+=unnamed " turns out I do like is sharing windows clipboard
@@ -77,6 +84,8 @@ set showcmd							" display incomplete commands
 set backspace=2						" make backspace work normal
 set backspace=indent,eol,start		" allow backspacing over everything in insert mode
 set lz								" do not redraw while running macros (much faster) (LazyRedraw)
+set cursorline 		"high light current row
+"set cursorcolumn	"high light current column
 "set wildmenu						" turn on wild menu
 "set hid							" you can change buffer without saving
 "set whichwrap+=<,>,h,l  " backspace and cursor keys wrap to
@@ -257,5 +266,8 @@ let g:syntastic_check_on_wq = 0
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_key_list_select_completion = ['<TAB>']
 let g:ycm_key_list_previous_completion=['<S-TAB>']
+
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 "let g:ycm_collect_identifiers_from_tags_files = 1
 
