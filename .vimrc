@@ -84,7 +84,7 @@ set showcmd							" display incomplete commands
 set backspace=2						" make backspace work normal
 set backspace=indent,eol,start		" allow backspacing over everything in insert mode
 set lz								" do not redraw while running macros (much faster) (LazyRedraw)
-set cursorline 		"high light current row
+set nocursorline 		"no high light current row
 "set cursorcolumn	"high light current column
 "set wildmenu						" turn on wild menu
 "set hid							" you can change buffer without saving
