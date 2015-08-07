@@ -242,7 +242,9 @@ endif
 
 set path=./,/home/daniel/src/SUM/scebioscfg_lib/src/,/home/daniel/src/SUM/scebioscfg/src/
 set csprg=gtags-cscope
-cs add GTAGS
+if executable("gtags-cscope") == 1
+	cs add GTAGS
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
