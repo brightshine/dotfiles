@@ -18,6 +18,11 @@
 	st = status
 	re = remote
 
+	amend = commit --amend
+
+	unstage = reset HEAD
+	uncommit = reset --soft HEAD^
+
 	cbr = rev-parse --abbrev-ref HEAD
 	lo = log --oneline
 	dt = difftool
