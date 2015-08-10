@@ -5,8 +5,8 @@
 	branch = auto
 	log = false
 [user]
-	name = daniel
-	email = danielhsieh@supermicro.com.tw
+	name = Brightshine
+	email = brightshine.hsieh@gmail.com
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore
