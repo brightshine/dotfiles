@@ -20,7 +20,7 @@ ZSH_THEME="maran"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -51,7 +51,8 @@ ZSH_THEME="maran"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git sudo docker history)
+#plugins=(git sudo docker history tmux vi-mode)
 
 # User configuration
 
@@ -122,16 +123,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-##Insert sudo before command {{{ 
-#define function
-sudo-command-line() {
-	[[ -z $BUFFER ]] && zle up-history
-	[[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
-	#move cursor to end-of-line
-	zle end-of-line
-}
-zle -N sudo-command-line
-#define hotkey： [Esc] [Esc]
-bindkey "\e\e" sudo-command-line
-#}}}
+alias tmux="tmux -2"
+
 
