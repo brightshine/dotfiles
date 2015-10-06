@@ -123,6 +123,11 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-alias tmux="tmux -2"
+#alias tmux="tmux -2"
 
-
+setopt no_share_history
+export TERM=xterm-256color
+export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+        vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+        -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+        -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
