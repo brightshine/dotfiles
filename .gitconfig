@@ -8,9 +8,9 @@
 	name = Brightshine
 	email = brightshine.hsieh@gmail.com
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.gitignore
-	pager = view -
+	pager = less -r
 [alias]
 	br = branch
 	co = checkout
@@ -29,8 +29,11 @@
 	mt = mergetool
 	showt = "!f() { git dt $1^ $1; }; f"
 	files = "!f() { git diff --name-status $1^ $1; }; f"
+
+	svnhead = log --grep=git-svn --pretty=format:'%h' -n 1
 [merge]
 	tool = vim
 
 [push]
 	default = simple
+
