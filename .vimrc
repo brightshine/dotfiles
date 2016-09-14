@@ -1,6 +1,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_host_prog = '/usr/bin/python2'
 set nocompatible               " be iMproved
 filetype off                   " required!
 
@@ -25,18 +26,23 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/vundle'
 
+Plugin 'EduardoBautista/grb256'
+
 " Better file browser
 Plugin 'scrooloose/nerdtree'
 
-Plugin 'scrooloose/syntastic.git'
+"Plugin 'scrooloose/syntastic.git'
 
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 
 " Improved C++11/14 STL syntax highlighting 
 Plugin 'Mizuchi/STL-Syntax'
 
 " Swtich between source files and header files quickly."
 Plugin 'vim-scripts/a.vim'
+
+" Use gtags to trace c++ code
+Plugin 'aceofall/gtags.vim'
 
 Plugin 'rking/ag.vim'
 call vundle#end()  
@@ -56,14 +62,12 @@ filetype plugin indent on " detect the type of file and load indent files
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme/Colors
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set background=dark		" we are using a dark background
+set background=light		" we are using a dark background
 syntax on				" syntax highlighting on
-"color oceandeep			" my theme
+color  grb256			" my theme
 if ! has("gui_running")
 	set t_Co=256
 endif 
-"colorscheme peaksea			" my theme
-colorscheme grb256
 augroup filetypedetect
 	au! BufRead,BufNewFile *.shtml setfiletype php
 augroup END
@@ -189,6 +193,9 @@ map <F12> :%!xxd -r<CR>    " 回復正常顯示
 "quickly resize windows with a horizontal split
 :map <M-<> <C-W><
 :map <M->> <C-W>> 
+"map alt+a/alt+x as adding/decresing number
+":nmap <A-a> <C-a>
+":nmap <A-x> <C-x>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Special
@@ -206,6 +213,10 @@ let python_highlight_all = 1
 if match($TERM, "screen")!=-1
 	set term=xterm
 endif
+if match($TERM, "tmux")!=-1
+	set term=xterm-256color
+endif
+
 
 "let g:miniBufExplMapWindowNavVim = 1
 "let g:miniBufExplMapWindowNavArrows = 1
@@ -240,27 +251,30 @@ if exists("&ambiwidth")
 endif
 
 
-set path=./,/home/daniel/src/SUM/scebioscfg_lib/src/,/home/daniel/src/SUM/scebioscfg/src/
+set path=./,/home/daniel/src/SUM/scebioscfg_lib/src/,/home/daniel/src/SUM/scebioscfg/src/,/home/daniel/src/SUM/libBase/src/,/home/daniel/src/SUM/libBiosCfg/src
 set csprg=gtags-cscope
 if executable("gtags-cscope") == 1
 	cs add GTAGS
 endif
+let GtagsCscope_Auto_Load = 1
+let CtagsCscope_Auto_Map = 1
+let GtagsCscope_Quiet = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " syntastic
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-execute pathogen#infect()
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"execute pathogen#infect()
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 "let g:syntastic_cpp_check_header = 1
-"let g:syntastic_cpp_include_dirs = [ '' ]
+"let g:syntastic_cpp_include_dirs = [ '.' ,'/home/daniel/src/SUM/libBase/src/' , '/home/daniel/src/SUM/libBiosCfg/src/' ,  '/home/daniel/src/SUM/scebioscfg_lib/src/' , '/home/daniel/src/SUM/scebioscfg/src/' , '/home/daniel/src/SUM/SUM_Cute_Test/src' ]
 "let g:syntastic_cpp_auto_refresh_includes = 1
 "let g:syntastic_disabled_filetypes=['cpp']
 
@@ -273,3 +287,13 @@ nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gd :YcmCompleter GoToDefinition<CR>
 "let g:ycm_collect_identifiers_from_tags_files = 1
 
+let @s='cwconst string&2b'
+let @v='cwconst vector&2b'
+let @e='^wdwhxf_i^M^[j^dt"$hxDddkkpA,^[kJJIthrow ^[jdd'
+let @a='s/\.assign(\(.[^)]*\))/ = \1 /g'
+let @p='s/\.append(\(.[^)]*\))/ += \1 /g'
+
+augroup XML
+    autocmd!
+    autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
