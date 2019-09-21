@@ -9,6 +9,19 @@ Plug 'peterhoeg/vim-qml'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim' 
+"Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+
+"if has('nvim')
+"    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"    Plug 'Shougo/deoplete.nvim'
+"    Plug 'roxma/nvim-yarp'
+"    Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"let g:deoplete#enable_at_startup = 1
+
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -71,13 +84,16 @@ set formatoptions=mtcql		" re-format for chinese
 " terminal 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set t_ti= t_te= 			" Not erase terminal content 
-if match($TERM, "screen")!=-1
-	set term=xterm
-endif
-if match($TERM, "tmux")!=-1
-	set term=xterm-256color
-endif
-
+"if match($TERM, "screen")!=-1
+"	set term=xterm
+"endif
+"if match($TERM, "tmux")!=-1
+"	set term=xterm-256color
+"endif
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" mouse 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set mouse=nv                " Mouse in normal visual mode
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Hotkey mapping
@@ -99,6 +115,8 @@ set pastetoggle=<F9>
 map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
 map <F12> :%!xxd -r<CR>    
+
+map <C-o> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show tab number & filename in tabs
