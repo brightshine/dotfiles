@@ -90,10 +90,17 @@ set t_ti= t_te= 			" Not erase terminal content
 "if match($TERM, "tmux")!=-1
 "	set term=xterm-256color
 "endif
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " mouse 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set mouse=nv                " Mouse in normal visual mode
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" clipboard 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set clipboard=unnamedplus   " Use clipboard for all operation
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Hotkey mapping
@@ -116,7 +123,6 @@ map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
 map <F12> :%!xxd -r<CR>    
 
-map <C-o> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show tab number & filename in tabs
