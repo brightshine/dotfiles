@@ -9,6 +9,7 @@ Plug 'peterhoeg/vim-qml'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim' 
+Plug 'Yggdroot/LeaderF'
 "Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -123,6 +124,9 @@ map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
 map <F12> :%!xxd -r<CR>    
 
+let g:Lf_ShortcutF = '<C-K>'
+
+"map <C-o> :NERDTreeToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show tab number & filename in tabs
@@ -172,3 +176,4 @@ if exists("+showtabline")
     set showtabline=1
     highlight link TabNum Special
 endif
+
