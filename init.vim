@@ -35,6 +35,9 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+
 """""""""""""""""" TO LEARN """""""""""""""""""""""""""""""""""""""
 " Async plugin for vim and neovim to ease the use of ctags/gtags
 "Plug 'jsfaint/gen_tags'
