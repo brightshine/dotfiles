@@ -10,16 +10,40 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " A - for switching between source and header files
 Plug 'vim-scripts/a.vim'
 
+" Warning for extra space in the end of line
+Plug 'bronson/vim-trailing-whitespace'
+
+" Tag bar display ??
+"Plug 'majutsushi/tagbar'
+
+" Move between Vim panes and tmux splits seamlessly
+Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'aceofall/gtags.vim'
 Plug 'rking/ag.vim'
 Plug 'peterhoeg/vim-qml'
+
+" gutentags
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 
 " colorscheme
 Plug 'morhetz/gruvbox'
-Plug 'ayu-theme/ayu-vim' 
+Plug 'ayu-theme/ayu-vim'
 
-"Plug 'Yggdroot/LeaderF'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+"""""""""""""""""" TO LEARN """""""""""""""""""""""""""""""""""""""
+" Async plugin for vim and neovim to ease the use of ctags/gtags
+"Plug 'jsfaint/gen_tags'
+"
+" Neovim thin wrapper for GDB, LLDB and PDB
+"Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
+"
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
 "
 "Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -77,7 +101,7 @@ set shiftwidth=4			" Use 4 white space to shift
 "set smartindent			" always set smartindenting on
 "set noexpandtab			" real tabs please!
 set expandtab				" Replace tab with whitespace
-set formatoptions=mtcql		" re-format for chinese 
+set formatoptions=mtcql		" re-format for chinese
 "set smarttab				" use tabs at the start of a line, spaces elsewhere
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -91,9 +115,9 @@ set formatoptions=mtcql		" re-format for chinese
 set foldnestmax=5           "deepest fold is 5 levels
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" terminal 
+" terminal
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set t_ti= t_te= 			" Not erase terminal content 
+set t_ti= t_te= 			" Not erase terminal content
 "if match($TERM, "screen")!=-1
 "	set term=xterm
 "endif
@@ -102,12 +126,12 @@ set t_ti= t_te= 			" Not erase terminal content
 "endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" mouse 
+" mouse
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set mouse=nv                " Mouse in normal visual mode
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" clipboard 
+" clipboard
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set clipboard=unnamedplus   " Use clipboard for all operation
 
@@ -131,14 +155,44 @@ map <F9> :set paste!<BAr>set paste?<CR>
 set pastetoggle=<F9>
 map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
-map <F12> :%!xxd -r<CR>    
+map <F12> :%!xxd -r<CR>
 
-let g:Lf_ShortcutF = '<C-K>'
+" ################ LeaderF #########################
+" 定義了 CTRL+P 在當前項目目錄打開文件搜索，
+" CTRL+N 打開 MRU 搜索，
+" ALT+P 打開函數搜索，
+" ALT+N 打開 Buffer 搜索，
+" ALT+M 打開 Tag 搜索
+let g:Lf_ShortcutF = '<c-p>'
+let g:Lf_ShortcutB = '<m-n>'
+noremap <c-n> :LeaderfMru<cr>
+noremap <m-p> :LeaderfFunction!<cr>
+noremap <m-n> :LeaderfBuffer<cr>
+noremap <m-m> :LeaderfTag<cr>
+
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+let g:Lf_WorkingDirectoryMode = 'Ac'
+let g:Lf_WindowHeight = 0.30
+let g:Lf_CacheDirectory = expand('~/.vim/cache')
+let g:Lf_ShowRelativePath = 0
+let g:Lf_HideHelp = 1
+let g:Lf_StlColorscheme = 'powerline'
+let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+
+let g:Lf_NormalMap = {
+    \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+    \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+    \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+    \ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+    \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+    \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+    \ }
 
 
 " ################ NERDTree #########################
 " shift+i (show hidden files)
- 
+
 " ctrl+n open/closes nerd tree
 noremap <C-n> :NERDTreeToggle<CR>
 
@@ -146,6 +200,34 @@ noremap <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
 
 
+" ################ AirLine #########################
+" set status line
+set laststatus=0
+" enable powerline-fonts
+let g:airline_powerline_fonts = 0
+
+let g:airline#extensions#tabline#enabled = 1
+
+" vim airline fonts
+if !exists('g:airline_symbols')
+	let g:airline_symbols= {}
+endif
+
+" unicode symbols
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.maxlinenr = '☰'
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_powerline_fonts = 1
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show tab number & filename in tabs
@@ -196,3 +278,60 @@ if exists("+showtabline")
     highlight link TabNum Special
 endif
 
+
+" ----------gutentags.vim插件配置-----------------------------------
+"yum install -y global-ctags
+" REF http://oenhan.com/vim8-c-ide-plugin-vimrc
+set tags=./.tags;,.tags
+let $GTAGSLABEL = 'pygments'
+let $GTAGSCONF = '/etc/gtags.conf'
+
+" gutentags 搜索工程目錄的標誌，當前文件路徑向上遞歸直到碰到這些文件/目錄名
+let g:gutentags_project_root = ['.git','.root','.svn','.hg','.project']
+
+" 所生成的數據文件的名稱
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 同時開啟 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+    let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+    let g:gutentags_modules += ['gtags_cscope']
+endif
+
+" 將自動生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目錄中，避免污染工程目錄
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" 配置 ctags 的參數
+let g:gutentags_ctags_extra_args = []
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" 如果使用 universal ctags 需要增加下面一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+" 禁用 gutentags 自動加載 gtags 數據庫的行為
+" 避免多個項目數據庫相互干擾,使用plus插件解決問題
+let g:gutentags_auto_add_gtags_cscope = 0
+
+"let g:gutentags_define_advanced_commands = 1
+
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
+" default keymap
+"<leader>cs    Find symbol (reference) under cursor
+"<leader>cg    Find symbol definition under cursor
+"<leader>cd    Functions called by this function
+"<leader>cc    Functions calling this function
+"<leader>ct    Find text string under cursor
+"<leader>ce    Find egrep pattern under cursor
+"<leader>cf    Find file name under cursor
+"<leader>ci    Find files #including the file name under cursor
+"<leader>ca    Find places where current symbol is assigned
+"
+" ################ Deoplete #########################
+let g:deoplete#enable_at_startup = 1
