@@ -1,15 +1,26 @@
 call plug#begin()
 Plug 'gmarik/vundle'
-Plug 'scrooloose/nerdtree'
+
+" nerd tree
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" enhanced highlight
 Plug 'octol/vim-cpp-enhanced-highlight'
+
+" A - for switching between source and header files
 Plug 'vim-scripts/a.vim'
+
 Plug 'aceofall/gtags.vim'
 Plug 'rking/ag.vim'
 Plug 'peterhoeg/vim-qml'
 Plug 'ludovicchabant/vim-gutentags'
+
+" colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim' 
-Plug 'Yggdroot/LeaderF'
+
+"Plug 'Yggdroot/LeaderF'
+"
 "Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -37,7 +48,6 @@ filetype plugin indent on 		" detect the type of file and load indent files
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme/Colors
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 set termguicolors 			" Opaque Background (Comment out to use terminal's profile)
 set background=dark			" we are using a dark background
 syntax on				" syntax highlighting on
@@ -52,12 +62,10 @@ set nocursorline 			" no high light current row
 "set cursorcolumn			" high light current column
 set wildmenu				" turn on wild menu
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Visual cues
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set showmatch				" show matching brackets
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text Formatting/Layout
@@ -80,6 +88,7 @@ set formatoptions=mtcql		" re-format for chinese
 "set foldlevel=100 			" Don't autofold anything (but I can still fold manually)
 "set foldopen-=search 			" don't open folds when you search into them
 "set foldopen-=undo 			" don't open folds when you undo stuff
+set foldnestmax=5           "deepest fold is 5 levels
 "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " terminal 
@@ -110,7 +119,7 @@ map <F1> :make -C %:h <CR>
 map <F2> :up<CR>
 map <F3> :up<CR>:q<CR>
 map <F4> :q!<CR>
-nnoremap <silent> <F5> :NERDTreeCWD<CR>
+nnoremap <silent> <F5> :NERDTreeToggle<CR>
 map <F6> :SyntasticToggleMode<CR>
 map <F7> :if exists("syntax_on") <BAR>
 			\   syntax off <BAR><CR>
@@ -126,7 +135,17 @@ map <F12> :%!xxd -r<CR>
 
 let g:Lf_ShortcutF = '<C-K>'
 
-"map <C-o> :NERDTreeToggle<CR>
+
+" ################ NERDTree #########################
+" shift+i (show hidden files)
+ 
+" ctrl+n open/closes nerd tree
+noremap <C-n> :NERDTreeToggle<CR>
+
+" quit nerd tree on file open
+let g:NERDTreeQuitOnOpen = 1
+
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show tab number & filename in tabs
