@@ -11,7 +11,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-scripts/a.vim'
 
 " Warning for extra space in the end of line
-Plug 'bronson/vim-trailing-whitespace'
+"Plug 'bronson/vim-trailing-whitespace'
 
 " Tag bar display ??
 "Plug 'majutsushi/tagbar'
@@ -25,7 +25,7 @@ Plug 'peterhoeg/vim-qml'
 
 " gutentags
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
+"Plug 'skywind3000/gutentags_plus'
 
 " colorscheme
 Plug 'morhetz/gruvbox'
@@ -33,14 +33,14 @@ Plug 'ayu-theme/ayu-vim'
 
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 "Plug 'SirVer/ultisnips'
 "Plug 'honza/vim-snippets'
 
 """""""""""""""""" TO LEARN """""""""""""""""""""""""""""""""""""""
 " Async plugin for vim and neovim to ease the use of ctags/gtags
-"Plug 'jsfaint/gen_tags'
+Plug 'jsfaint/gen_tags'
 "
 " Neovim thin wrapper for GDB, LLDB and PDB
 "Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
@@ -48,7 +48,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 "
-"Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 
@@ -203,35 +203,6 @@ noremap <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
 
 
-" ################ AirLine #########################
-" set status line
-set laststatus=0
-" enable powerline-fonts
-let g:airline_powerline_fonts = 0
-
-let g:airline#extensions#tabline#enabled = 1
-
-" vim airline fonts
-if !exists('g:airline_symbols')
-	let g:airline_symbols= {}
-endif
-
-" unicode symbols
-let g:airline_left_alt_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.maxlinenr = '☰'
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = '∄'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_powerline_fonts = 1
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show tab number & filename in tabs
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -285,45 +256,45 @@ endif
 " ----------gutentags.vim插件配置-----------------------------------
 "yum install -y global-ctags
 " REF http://oenhan.com/vim8-c-ide-plugin-vimrc
-set tags=./.tags;,.tags
-let $GTAGSLABEL = 'pygments'
-let $GTAGSCONF = '/etc/gtags.conf'
-
-" gutentags 搜索工程目錄的標誌，當前文件路徑向上遞歸直到碰到這些文件/目錄名
-let g:gutentags_project_root = ['.git','.root','.svn','.hg','.project']
-
-" 所生成的數據文件的名稱
-let g:gutentags_ctags_tagfile = '.tags'
-
-" 同時開啟 ctags 和 gtags 支持：
-let g:gutentags_modules = []
-if executable('ctags')
-    let g:gutentags_modules += ['ctags']
-endif
-if executable('gtags-cscope') && executable('gtags')
-    let g:gutentags_modules += ['gtags_cscope']
-endif
-
-" 將自動生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目錄中，避免污染工程目錄
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-
-" 配置 ctags 的參數
-let g:gutentags_ctags_extra_args = []
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-
-" 如果使用 universal ctags 需要增加下面一行
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-
-" 禁用 gutentags 自動加載 gtags 數據庫的行為
-" 避免多個項目數據庫相互干擾,使用plus插件解決問題
-let g:gutentags_auto_add_gtags_cscope = 0
-
-"let g:gutentags_define_advanced_commands = 1
-
-" change focus to quickfix window after search (optional).
-let g:gutentags_plus_switch = 1
+"set tags=./.tags;,.tags
+"let $GTAGSLABEL = 'pygments'
+"let $GTAGSCONF = '/etc/gtags.conf'
+"
+"" gutentags 搜索工程目錄的標誌，當前文件路徑向上遞歸直到碰到這些文件/目錄名
+"let g:gutentags_project_root = ['.git','.root','.svn','.hg','.project']
+"
+"" 所生成的數據文件的名稱
+"let g:gutentags_ctags_tagfile = '.tags'
+"
+"" 同時開啟 ctags 和 gtags 支持：
+"let g:gutentags_modules = []
+"if executable('ctags')
+"    let g:gutentags_modules += ['ctags']
+"endif
+"if executable('gtags-cscope') && executable('gtags')
+"    let g:gutentags_modules += ['gtags_cscope']
+"endif
+"
+"" 將自動生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目錄中，避免污染工程目錄
+"let g:gutentags_cache_dir = expand('~/.cache/tags')
+"
+"" 配置 ctags 的參數
+"let g:gutentags_ctags_extra_args = []
+"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+"
+"" 如果使用 universal ctags 需要增加下面一行
+"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+"
+"" 禁用 gutentags 自動加載 gtags 數據庫的行為
+"" 避免多個項目數據庫相互干擾,使用plus插件解決問題
+"let g:gutentags_auto_add_gtags_cscope = 0
+"
+""let g:gutentags_define_advanced_commands = 1
+"
+"" change focus to quickfix window after search (optional).
+"let g:gutentags_plus_switch = 1
 
 " default keymap
 "<leader>cs    Find symbol (reference) under cursor
