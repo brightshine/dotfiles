@@ -23,9 +23,13 @@ Plug 'aceofall/gtags.vim'
 Plug 'rking/ag.vim'
 Plug 'peterhoeg/vim-qml'
 
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+
 " gutentags
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 "Plug 'skywind3000/gutentags_plus'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 
 " colorscheme
 Plug 'morhetz/gruvbox'
@@ -40,7 +44,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 """""""""""""""""" TO LEARN """""""""""""""""""""""""""""""""""""""
 " Async plugin for vim and neovim to ease the use of ctags/gtags
-Plug 'jsfaint/gen_tags'
+"Plug 'jsfaint/gen_tags'
 "
 " Neovim thin wrapper for GDB, LLDB and PDB
 "Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh \| UpdateRemotePlugins' }
@@ -50,7 +54,9 @@ Plug 'jsfaint/gen_tags'
 "
 Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+"
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
 
 "if has('nvim')
 "    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -162,16 +168,18 @@ map <F12> :%!xxd -r<CR>
 
 " ################ LeaderF #########################
 " 定義了 CTRL+P 在當前項目目錄打開文件搜索，
-" CTRL+N 打開 MRU 搜索，
-" ALT+P 打開函數搜索，
-" ALT+N 打開 Buffer 搜索，
-" ALT+M 打開 Tag 搜索
-let g:Lf_ShortcutF = '<c-p>'
-let g:Lf_ShortcutB = '<m-n>'
-noremap <c-n> :LeaderfMru<cr>
-noremap <m-p> :LeaderfFunction!<cr>
-noremap <m-n> :LeaderfBuffer<cr>
-noremap <m-m> :LeaderfTag<cr>
+" ALT+M 打開 MRU 搜索，
+" ALT+K 打開 檔案搜索，
+" ALT+F 打開函數搜索，
+" ALT+B 打開 Buffer 搜索，
+" ALT+T 打開 Tag 搜索
+"let g:Lf_ShortcutF = '<c-p>'
+"let g:Lf_ShortcutB = '<m-n>'
+noremap <m-m> :LeaderfMru<cr>
+noremap <m-k> :LeaderfFile<cr>
+noremap <m-f> :LeaderfFunction!<cr>
+noremap <m-b> :LeaderfBuffer<cr>
+noremap <m-t> :LeaderfTag<cr>
 
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -193,6 +201,10 @@ let g:Lf_NormalMap = {
     \ }
 
 
+" ################ YouCompleteMe #########################
+let g:ycm_use_clangd = 1
+let g:ycm_clangd_binary_path = "/usr/local/clang9/bin/clangd"
+
 " ################ NERDTree #########################
 " shift+i (show hidden files)
 
@@ -203,98 +215,73 @@ noremap <C-n> :NERDTreeToggle<CR>
 let g:NERDTreeQuitOnOpen = 1
 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Show tab number & filename in tabs
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tabline=%!MyTabLine()  " custom tab pages line
-" (Based on http://stackoverflow.com/questions/5927952/whats-implementation-of-vims-default-tabline-function)
-if exists("+showtabline")
-    function! MyTabLine()
-        let s = ''
-        let wn = ''
-        let t = tabpagenr()
-        let i = 1
-        while i <= tabpagenr('$')
-            let buflist = tabpagebuflist(i)
-            let winnr = tabpagewinnr(i)
-            let s .= '%' . i . 'T'
-            let s .= (i == t ? '%1*' : '%2*')
-            let s .= ' '
-            let wn = tabpagewinnr(i,'$')
-
-            let s .= '%#TabNum#'
-            let s .= i
-            " let s .= '%*'
-            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-            let bufnr = buflist[winnr - 1]
-            let file = bufname(bufnr)
-            let buftype = getbufvar(bufnr, 'buftype')
-            if buftype == 'nofile'
-                if file =~ '\/.'
-                    let file = substitute(file, '.*\/\ze.', '', '')
-                endif
-            else
-                let file = fnamemodify(file, ':p:t')
-            endif
-            if file == ''
-                let file = '[No Name]'
-            endif
-            let s .= ' ' . file . ' '
-            let i = i + 1
-        endwhile
-        let s .= '%T%#TabLineFill#%='
-        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-        return s
-    endfunction
-    set stal=2
-    set tabline=%!MyTabLine()
-    set showtabline=1
-    highlight link TabNum Special
-endif
-
 
 " ----------gutentags.vim插件配置-----------------------------------
+" enable gtags module
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+
+" config project root markers.
+let g:gutentags_project_root = ['.git']
+
+"" 所生成的數據文件的名稱
+let g:gutentags_ctags_tagfile = '.tags'
+
+" 同時開啟 ctags 和 gtags 支持：
+let g:gutentags_modules = []
+if executable('ctags')
+    let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+    let g:gutentags_modules += ['gtags_cscope']
+endif
+
+" 配置 ctags 的參數
+let g:gutentags_ctags_extra_args = []
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" generate datebases in my cache directory, prevent gtags files polluting my project
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
+let g:gutentags_plus_nomap = 1
+
+" 如果使用 universal ctags 需要增加下面一行
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+" 禁用 gutentags 自動加載 gtags 數據庫的行為
+" 避免多個項目數據庫相互干擾,使用plus插件解決問題
+let g:gutentags_auto_add_gtags_cscope = 0
+
+"let g:gutentags_define_advanced_commands = 1
+
+" change focus to quickfix window after search (optional).
+let g:gutentags_plus_switch = 1
+
+noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
+noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
+noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
+noremap <silent> <leader>gt :GscopeFind t <C-R><C-W><cr>
+noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
+noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
+noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
 "yum install -y global-ctags
 " REF http://oenhan.com/vim8-c-ide-plugin-vimrc
 "set tags=./.tags;,.tags
 "let $GTAGSLABEL = 'pygments'
 "let $GTAGSCONF = '/etc/gtags.conf'
 "
-"" gutentags 搜索工程目錄的標誌，當前文件路徑向上遞歸直到碰到這些文件/目錄名
-"let g:gutentags_project_root = ['.git','.root','.svn','.hg','.project']
 "
-"" 所生成的數據文件的名稱
-"let g:gutentags_ctags_tagfile = '.tags'
-"
-"" 同時開啟 ctags 和 gtags 支持：
-"let g:gutentags_modules = []
-"if executable('ctags')
-"    let g:gutentags_modules += ['ctags']
-"endif
-"if executable('gtags-cscope') && executable('gtags')
-"    let g:gutentags_modules += ['gtags_cscope']
-"endif
 "
 "" 將自動生成的 ctags/gtags 文件全部放入 ~/.cache/tags 目錄中，避免污染工程目錄
 "let g:gutentags_cache_dir = expand('~/.cache/tags')
 "
-"" 配置 ctags 的參數
-"let g:gutentags_ctags_extra_args = []
-"let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-"let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-"let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 "
-"" 如果使用 universal ctags 需要增加下面一行
-"let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-"
-"" 禁用 gutentags 自動加載 gtags 數據庫的行為
-"" 避免多個項目數據庫相互干擾,使用plus插件解決問題
-"let g:gutentags_auto_add_gtags_cscope = 0
-"
-""let g:gutentags_define_advanced_commands = 1
-"
-"" change focus to quickfix window after search (optional).
-"let g:gutentags_plus_switch = 1
 
 " default keymap
 "<leader>cs    Find symbol (reference) under cursor
@@ -309,3 +296,18 @@ endif
 "
 " ################ Deoplete #########################
 let g:deoplete#enable_at_startup = 1
+
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'cc'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType cc setlocal omnifunc=lsp#complete
+    augroup end
+endif
+
