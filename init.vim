@@ -7,9 +7,6 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " enhanced highlight
 Plug 'octol/vim-cpp-enhanced-highlight'
 
-" A - for switching between source and header files
-Plug 'vim-scripts/a.vim'
-
 " Warning for extra space in the end of line
 "Plug 'bronson/vim-trailing-whitespace'
 
@@ -36,6 +33,8 @@ Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+
+Plug 'tpope/vim-projectionist'
 
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
@@ -203,7 +202,9 @@ let g:Lf_NormalMap = {
 
 " ################ YouCompleteMe #########################
 let g:ycm_use_clangd = 1
-let g:ycm_clangd_binary_path = "/usr/local/clang9/bin/clangd"
+let g:ycm_clangd_binary_path = exepath("/usr/bin/clangd")
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
 
 " ################ NERDTree #########################
 " shift+i (show hidden files)
@@ -311,3 +312,6 @@ if executable('clangd')
     augroup end
 endif
 
+let g:clang_rename_path = '/usr/bin/clang-rename'
+noremap <leader>rr :py3f /usr/local/clang10/share/clang/clang-rename.py<cr>
+noremap <leader>if :py3f /usr/local/clang10/share/clang/clang-include-fixer.py<cr>
