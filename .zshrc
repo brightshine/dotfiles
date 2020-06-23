@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/home/daniel/.oh-my-zsh
+export ZSH=/home/bright/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -56,7 +56,7 @@ plugins=(git sudo docker history)
 
 # User configuration
 
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/clang9/bin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
@@ -85,6 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias ARM=". /opt/fsl-imx-fb/4.9.88-2.0.0/environment-setup-cortexa9hf-neon-poky-linux-gnueabi"
 
 # Set up the prompt
 #autoload -Uz promptinit
@@ -126,8 +127,23 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #alias tmux="tmux -2"
 
 setopt no_share_history
-export TERM=xterm-256color
-export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
-        vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
-        -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
-        -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+#export TERM=xterm-256color
+export TERM=tmux-256color
+#export PAGER="/bin/sh -c \"unset PAGER;col -b -x | \
+#        vim -R -c 'set ft=man nomod nolist' -c 'map q :q<CR>' \
+#        -c 'map <SPACE> <C-D>' -c 'map b <C-U>' \
+#        -c 'nmap K :Man <C-R>=expand(\\\"<cword>\\\")<CR><CR>' -\""
+
+export LANG=zh_TW.UTF-8
+export LANGUAGE=en_US           
+export LC_ADDRESS=zh_TW.UTF-8                                                                                    
+export LC_IDENTIFICATION=zh_TW.UTF-8
+export LC_MEASUREMENT=zh_TW.UTF-8
+export LC_MONETARY=zh_TW.UTF-8                 
+export LC_NAME=zh_TW.UTF-8
+export LC_NUMERIC=zh_TW.UTF-8             
+export LC_PAPER=zh_TW.UTF-8
+export LC_TELEPHONE=zh_TW.UTF-8   
+export LC_TIME=zh_TW.UTF-8  
+
+export QML_IMPORT_PATH=/home/bright/Qt5.14.1/5.14.1/gcc_64/qml
