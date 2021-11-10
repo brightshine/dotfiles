@@ -1,11 +1,16 @@
 call plug#begin()
-Plug 'gmarik/vundle'
 
 " nerd tree
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " enhanced highlight
 Plug 'octol/vim-cpp-enhanced-highlight'
+
+"Plug 'Chiel92/vim-autoformat'
+Plug 'rhysd/vim-clang-format'
+
+" swtich between source files and header files quickly.
+Plug 'vim-scripts/a.vim'
 
 " Warning for extra space in the end of line
 "Plug 'bronson/vim-trailing-whitespace'
@@ -20,7 +25,7 @@ Plug 'aceofall/gtags.vim'
 Plug 'rking/ag.vim'
 Plug 'peterhoeg/vim-qml'
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 
 " gutentags
 "Plug 'ludovicchabant/vim-gutentags'
@@ -32,7 +37,7 @@ Plug 'skywind3000/gutentags_plus'
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
 
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+"Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
 Plug 'tpope/vim-projectionist'
 
@@ -52,7 +57,7 @@ Plug 'tpope/vim-projectionist'
 "Plug 'vim-airline/vim-airline-themes'
 "
 Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
 "Plug 'prabirshrestha/async.vim'
 "Plug 'prabirshrestha/vim-lsp'
@@ -90,7 +95,7 @@ colorscheme  ayu			" my theme
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set backspace=2				" make backspace work normal
 set lz					" do not redraw while running macros (much faster) (LazyRedraw)
-set nocursorline 			" no high light current row
+set nocursorline        " no high light current row
 "set cursorcolumn			" high light current column
 set wildmenu				" turn on wild menu
 
@@ -151,7 +156,7 @@ map <F1> :make -C %:h <CR>
 map <F2> :up<CR>
 map <F3> :up<CR>:q<CR>
 map <F4> :q!<CR>
-nnoremap <silent> <F5> :NERDTreeToggle<CR>
+nnoremap <silent> <F5> :NERDTreeFind<CR>
 map <F6> :SyntasticToggleMode<CR>
 map <F7> :if exists("syntax_on") <BAR>
 			\   syntax off <BAR><CR>
@@ -165,6 +170,9 @@ map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
 map <F12> :%!xxd -r<CR>
 
+" ################ vim-clang-format #########################
+let g:clang_format#detect_style_file = 1 "Auto detect the style file
+
 " ################ LeaderF #########################
 " 定義了 CTRL+P 在當前項目目錄打開文件搜索，
 " ALT+M 打開 MRU 搜索，
@@ -174,44 +182,42 @@ map <F12> :%!xxd -r<CR>
 " ALT+T 打開 Tag 搜索
 "let g:Lf_ShortcutF = '<c-p>'
 "let g:Lf_ShortcutB = '<m-n>'
-noremap <m-m> :LeaderfMru<cr>
-noremap <m-k> :LeaderfFile<cr>
-noremap <m-f> :LeaderfFunction!<cr>
-noremap <m-b> :LeaderfBuffer<cr>
-noremap <m-t> :LeaderfTag<cr>
-
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
-let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
-let g:Lf_WorkingDirectoryMode = 'Ac'
-let g:Lf_WindowHeight = 0.30
-let g:Lf_CacheDirectory = expand('~/.vim/cache')
-let g:Lf_ShowRelativePath = 0
-let g:Lf_HideHelp = 1
-let g:Lf_StlColorscheme = 'powerline'
-let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
-
-let g:Lf_NormalMap = {
-    \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
-    \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
-    \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
-    \ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
-    \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
-    \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
-    \ }
+"
+" noremap <m-m> :LeaderfMru<cr>
+" noremap <m-k> :LeaderfFile<cr>
+" noremap <m-f> :LeaderfFunction!<cr>
+" noremap <m-b> :LeaderfBuffer<cr>
+" noremap <m-t> :LeaderfTag<cr>
+" 
+" let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
+" let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
+" let g:Lf_WorkingDirectoryMode = 'Ac'
+" let g:Lf_WindowHeight = 0.30
+" let g:Lf_CacheDirectory = expand('~/.vim/cache')
+" let g:Lf_ShowRelativePath = 0
+" let g:Lf_HideHelp = 1
+" let g:Lf_StlColorscheme = 'powerline'
+" let g:Lf_PreviewResult = {'Function':0, 'BufTag':0}
+" 
+" let g:Lf_NormalMap = {
+"     \ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
+"     \ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
+"     \ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
+"     \ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
+"     \ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
+"     \ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
+"     \ }
 
 
 " ################ YouCompleteMe #########################
-let g:ycm_use_clangd = 1
-let g:ycm_clangd_binary_path = exepath("/usr/bin/clangd")
+"let g:ycm_use_clangd = 1
+"let g:ycm_clangd_binary_path = exepath("/usr/bin/clangd")
 " Let clangd fully control code completion
-let g:ycm_clangd_uses_ycmd_caching = 0
+"let g:ycm_clangd_uses_ycmd_caching = 0
 
 " ################ NERDTree #########################
-" shift+i (show hidden files)
-
 " ctrl+n open/closes nerd tree
 noremap <C-n> :NERDTreeToggle<CR>
-
 " quit nerd tree on file open
 let g:NERDTreeQuitOnOpen = 1
 
@@ -295,8 +301,9 @@ noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
 "<leader>ci    Find files #including the file name under cursor
 "<leader>ca    Find places where current symbol is assigned
 "
+
 " ################ Deoplete #########################
-let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_at_startup = 1
 
 if executable('clangd')
     augroup lsp_clangd
@@ -312,6 +319,167 @@ if executable('clangd')
     augroup end
 endif
 
-let g:clang_rename_path = '/usr/bin/clang-rename'
-noremap <leader>rr :py3f /usr/local/clang10/share/clang/clang-rename.py<cr>
-noremap <leader>if :py3f /usr/local/clang10/share/clang/clang-include-fixer.py<cr>
+"let g:clang_rename_path = '/usr/bin/clang-rename'
+"noremap <leader>rr :py3f /usr/local/clang10/share/clang/clang-rename.py<cr>
+"noremap <leader>if :py3f /usr/local/clang10/share/clang/clang-include-fixer.py<cr>
+
+
+" ################ CoC #########################
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
