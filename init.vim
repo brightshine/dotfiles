@@ -1,5 +1,8 @@
 call plug#begin()
 
+" LSP
+Plug 'neovim/nvim-lspconfig'
+
 " nerd tree
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 
@@ -25,17 +28,16 @@ Plug 'aceofall/gtags.vim'
 Plug 'rking/ag.vim'
 Plug 'peterhoeg/vim-qml'
 
-"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-
-" gutentags
-"Plug 'ludovicchabant/vim-gutentags'
-"Plug 'skywind3000/gutentags_plus'
+" update gtags database in background automatically on file change.
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
 
 " colorscheme
 Plug 'morhetz/gruvbox'
 Plug 'ayu-theme/ayu-vim'
+Plug 'zanloy/vim-colors-grb256'
+Plug 'nanotech/jellybeans.vim'
+
 
 "Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 
@@ -70,6 +72,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "    Plug 'roxma/vim-hug-neovim-rpc'
 "endif
 "let g:deoplete#enable_at_startup = 1
+Plug 'mileszs/ack.vim'
+
+Plug 'liuchengxu/vista.vim'
 
 call plug#end()
 
@@ -78,7 +83,6 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set history=50				" keep 50 lines of command line history
 set cf 					" enable error files and error jumping
-set clipboard+=unnamed 			" turns out I do like is sharing windows clipboard
 set ffs=unix,dos,mac 			" support all three, in this order
 filetype plugin indent on 		" detect the type of file and load indent files
 
@@ -88,7 +92,7 @@ filetype plugin indent on 		" detect the type of file and load indent files
 set termguicolors 			" Opaque Background (Comment out to use terminal's profile)
 set background=dark			" we are using a dark background
 syntax on				" syntax highlighting on
-colorscheme  ayu			" my theme
+colorscheme gruvbox			" my theme
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim/UI
@@ -164,11 +168,13 @@ map <F7> :if exists("syntax_on") <BAR>
 			\   syntax enable <BAR>
 			\ endif <CR>
 map <F8> :set hls!<BAR>set hls?<CR>
-map <F9> :set paste!<BAr>set paste?<CR>
+map <F9> :set paste!<BAR>set paste?<CR>
 set pastetoggle=<F9>
 map <F10> :set foldmethod=syntax<CR>
 map <F11> :set foldmethod=indent<CR>
-map <F12> :%!xxd -r<CR>
+map <F12> :Vista!!<CR>
+
+noremap <C-i> :set foldmethod=syntax<CR>
 
 " ################ vim-clang-format #########################
 let g:clang_format#detect_style_file = 1 "Auto detect the style file
@@ -221,7 +227,14 @@ noremap <C-n> :NERDTreeToggle<CR>
 " quit nerd tree on file open
 let g:NERDTreeQuitOnOpen = 1
 
+" ################ ack.vim #########################
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
+" ################ vista.vim #########################
+let g:vista#renderer#enable_icon = 0 " Disable icon dislay
+let g:vista_sidebar_width = 50
 
 " ----------gutentags.vim插件配置-----------------------------------
 " enable gtags module
@@ -241,6 +254,11 @@ endif
 if executable('gtags-cscope') && executable('gtags')
     let g:gutentags_modules += ['gtags_cscope']
 endif
+
+let g:gutentags_ctags_exclude = [
+  \'node_modules', '_build', 'build', 'CMakeFiles', '.mypy_cache', 'venv',
+  \'*.md', '*.tex', '*.css', '*.html', '*.json', '*.xml', '*.xmls', '*.ui',
+  \'*.js' ]
 
 " 配置 ctags 的參數
 let g:gutentags_ctags_extra_args = []
@@ -304,20 +322,24 @@ noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
 
 " ################ Deoplete #########################
 "let g:deoplete#enable_at_startup = 1
+"
+lua << EOF
+require'lspconfig'.clangd.setup{}
+EOF
 
-if executable('clangd')
-    augroup lsp_clangd
-        autocmd!
-        autocmd User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'cc'],
-                    \ })
-        autocmd FileType c setlocal omnifunc=lsp#complete
-        autocmd FileType cpp setlocal omnifunc=lsp#complete
-        autocmd FileType cc setlocal omnifunc=lsp#complete
-    augroup end
-endif
+"if executable('clangd')
+"    augroup lsp_clangd
+"        autocmd!
+"        autocmd User lsp_setup call lsp#register_server({
+"                    \ 'name': 'clangd',
+"                    \ 'cmd': {server_info->['clangd']},
+"                    \ 'whitelist': ['c', 'cpp', 'cc'],
+"                    \ })
+"        autocmd FileType c setlocal omnifunc=lsp#complete
+"        autocmd FileType cpp setlocal omnifunc=lsp#complete
+"        autocmd FileType cc setlocal omnifunc=lsp#complete
+"    augroup end
+"endif
 
 "let g:clang_rename_path = '/usr/bin/clang-rename'
 "noremap <leader>rr :py3f /usr/local/clang10/share/clang/clang-rename.py<cr>
@@ -483,3 +505,4 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
