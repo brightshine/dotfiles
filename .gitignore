@@ -1,0 +1,7 @@
+.cache
+Output/Debug
+build/*
+GPATH
+GRTAGS
+GTAGS
+
