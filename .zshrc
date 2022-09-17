@@ -14,6 +14,7 @@ antigen bundle history
 antigen bundle sudo
 antigen bundle tmux
 antigen bundle themes
+antigen-bundle Tarrasch/zsh-bd
 
 # Load bundles from external repos
 antigen bundle zsh-users/zsh-completions
